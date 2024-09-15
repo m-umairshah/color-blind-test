@@ -1,19 +1,27 @@
-# Color Blind Test with Animated Image Transitions
+# Color Blind Test for Adults and Kids
 
-This project is a web-based color blind test application that presents users with a series of images and interactive answer buttons. The test includes animated image transitions, a responsive progress bar to track user progress, and a results summary at the end.
+This repository contains a web-based color blind test application designed for both adults and kids. The application provides an interactive test where users answer questions to evaluate color blindness by identifying numbers or animal shapes within images.
 
 ## Features
 
-- **Animated Image Transitions**: Smooth diagonal reveal animation for each image using CSS keyframes.
-- **Responsive Design**: Works across different screen sizes, ensuring a consistent experience on desktop and mobile.
-- **Progress Tracking**: A dynamic progress bar to track user progression through the test.
-- **Results Summary**: Displays correct and user-selected answers at the end of the test.
-- **Restart Option**: Allows users to restart the test from either the game or result view.
-- **Preloaded Images**: Images are preloaded to ensure smooth transitions without delay.
+- **Two Versions**: 
+  - **Adult Test**: Uses number-based images.
+  - **Kids Test**: Uses fun animal-based images.
+- **Animated Image Transitions**: Smooth animations when new images are loaded in the kids' test.
+- **Interactive UI**: Users receive immediate feedback after each answer, and a progress bar shows their progress throughout the test.
+- **Results Summary**: Displays the number of correct answers at the end of the test.
+- **Restart Option**: Users can restart the test at any time.
+- **Popup Navigation**: The tests are loaded inside a fullscreen popup when selected from the main page.
 
 ## Demo
 
 You can see the project in action by visiting [Demo URL] (replace with the demo link if available).
+
+## File Structure
+
+- **index.html**: The main page that allows users to select between the adult and kids color blind tests.
+- **index1.html**: The color blind test for adults, featuring number-based questions.
+- **index2.html**: The color blind test for kids, featuring animal-based questions with animations.
 
 ## Installation
 
@@ -31,11 +39,16 @@ You can see the project in action by visiting [Demo URL] (replace with the demo 
 
 ## Usage
 
-1. Users are presented with an image and multiple answer buttons.
-2. Click the appropriate button to select the answer based on the displayed image.
-3. A progress bar at the top shows your progress through the test.
-4. Once all questions are answered, a results summary is displayed.
-5. Users can restart the test at any time using the restart button.
+1. Open `index.html` in your browser.
+2. Select either the **Adult Test** or **Kids Test** by clicking the corresponding button.
+3. For the **Adult Test**:
+   - You will be shown a series of images with numbers.
+   - Click the correct number or select "Not Sure" or "Nothing" if you can't see it.
+4. For the **Kids Test**:
+   - You will be shown a series of images with animals.
+   - Click the correct animal image that matches the question.
+5. A progress bar will show your progress, and results will be displayed after all questions are answered.
+6. You can restart the test at any time using the **Restart Test** button.
 
 ## Technologies Used
 
@@ -44,38 +57,11 @@ You can see the project in action by visiting [Demo URL] (replace with the demo 
 - **JavaScript**
 - **Bootstrap 5**
 
-## CSS Animations
+## Screenshots
 
-The image transitions use a diagonal reveal animation. If the animation slows down image loading, preloading is used to ensure smooth transitions.
-
-```css
-.image {
-  width: 300px;
-  height: 300px;
-  opacity: 1;
-  -webkit-mask-image: linear-gradient(135deg, black 0%, black 50%, transparent 50%, transparent 100%);
-  mask-image: linear-gradient(135deg, black 0%, black 50%, transparent 50%, transparent 100%);
-  mask-size: 300% 300%;
-  -webkit-mask-size: 300% 300%;
-  animation: revealDiagonal 3s forwards ease-in-out;
-}
-
-@keyframes revealDiagonal {
-  0% {
-    -webkit-mask-position: 100% 100%;
-    mask-position: 100% 100%;
-  }
-  100% {
-    -webkit-mask-position: 0% 0%;
-    mask-position: 0% 0%;
-  }
-}
-```
+![Adult Test Screenshot](path-to-screenshot)
+![Kids Test Screenshot](path-to-screenshot)
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-Feel free to modify it to suit your specific project needs!
