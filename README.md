@@ -1,7 +1,3 @@
-Here's a `README.md` file you can use for your project repository:
-
----
-
 # Color Blind Test with Animated Image Transitions
 
 This project is a web-based color blind test application that presents users with a series of images and interactive answer buttons. The test includes animated image transitions, a responsive progress bar to track user progress, and a results summary at the end.
