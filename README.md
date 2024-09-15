@@ -59,8 +59,8 @@ You can see the project in action by visiting [Demo URL] (replace with the demo 
 
 ## Screenshots
 
-![Adult Test Screenshot](path-to-screenshot)
-![Kids Test Screenshot](path-to-screenshot)
+![Adult Test Screenshot](screenshot/1.jpg)
+![Kids Test Screenshot](screenshot/2.jpg)
 
 ## License
 
