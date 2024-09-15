@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Selection</title>
+    <style>
+        /* Prevent the body from scrolling when the popup is open */
+        body.no-scroll {
+            overflow: hidden; /* Hides the scrollbar on the body */
+        }
+
+        /* Fullscreen popup styling */
+        .popup-window {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            position: relative;
+            overflow: hidden; /* Hide the scrollbar visually */
+        }
+
+        .popup-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            overflow: auto; /* Enable scrolling inside iframe */
+        }
+
+        /* Hide the scrollbar inside iframe */
+        .popup-content iframe::-webkit-scrollbar {
+            display: none; /* For WebKit-based browsers like Chrome, Safari */
+        }
+        
+        .popup-content iframe {
+            -ms-overflow-style: none;  /* Internet Explorer and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        /* Close button styling */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to the Color Blind Test</h1>
+    <button onclick="openPopup('index1.html')">Start Test for Adult</button>
+    <button onclick="openPopup('index2.html')">Start Test for Kids</button>
+
+    <!-- Popup Window -->
+    <div id="popup" class="popup-window">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup()">Close</button>
+            <iframe id="popupIframe"></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Function to open the popup window with the respective HTML file
+        function openPopup(pageUrl) {
+            const popup = document.getElementById('popup');
+            const iframe = document.getElementById('popupIframe');
+            iframe.src = pageUrl; // Load the selected page in the iframe
+            popup.style.display = 'flex'; // Show the popup in full-screen
+            
+            // Add no-scroll class to the body to hide the body's scrollbar
+            document.body.classList.add('no-scroll');
+        }
+
+        // Function to close the popup window
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            const iframe = document.getElementById('popupIframe');
+            popup.style.display = 'none'; // Hide the popup
+            iframe.src = ''; // Clear the iframe content
+            
+            // Remove no-scroll class to bring back the body's scrollbar
+            document.body.classList.remove('no-scroll');
+        }
+    </script>
+
+</body>
+</html>

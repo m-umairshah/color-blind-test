@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Color Blind Test</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: black;
+      color: white;
+    }
+
+    /* Basic button styles */
+    .answer-button {
+      background: #333;
+      color: #fff;
+      border-radius: 6px;
+      font-weight: 700;
+      white-space: nowrap;
+      padding: 1px 10px;
+      margin-left: 10px;
+      margin-right: 10px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      box-shadow: 0 1px #666, 0 5px #444, 0 6px 6px #0009;
+      cursor: pointer;
+    }
+
+    .answer-buttons {
+      background-color: #f39c12 !important;
+    }
+
+    .answer-buttonss {
+      background-color: #e74c3c !important;
+    }
+
+    .answer-button:active {
+      color: #fff;
+      text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff;
+      box-shadow: 0 1px #666, 0 2px #444, 0 2px 2px #000000e6;
+      -webkit-transform: translateY(3px);
+      transform: translateY(3px);
+      -webkit-animation: none;
+      animation: none;
+
+    }
+
+    .answer-buttons:hover {
+      background-color: #da8a09 !important;
+    }
+
+    .answer-buttonss:hover {
+      background-color: #cd3626 !important;
+    }
+
+    .answer-button:hover {
+      -webkit-animation: pulsate 1.2s linear infinite;
+      animation: pulsate 1.2s linear infinite;
+    }
+
+    /* Add specific styling for disabled buttons if you need */
+    .answer-button:disabled {
+      background-color: grey;
+      cursor: not-allowed;
+    }
+
+    /* Feedback Message styling */
+    #feedback {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #ff6347;
+    }
+
+    .cbt-progressbar {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 60px;
+    }
+
+    .cbt-progressbar-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #ddd;
+      transform: translateY(-50%);
+      z-index: 0;
+    }
+
+    .cbt-step {
+      position: relative;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #ddd;
+      z-index: 1;
+      text-align: center;
+      line-height: 30px;
+      font-size: 14px;
+      color: transparent;
+      transition: all 0.3s ease;
+      /* Animation */
+    }
+
+    .cbt-complete {
+      background-color: #8BC34A !important;
+
+    }
+
+    .cbt-active {
+      background-color: white;
+      color: green;
+      font-size: 12px;
+      border: 3px solid green;
+      width: 33px;
+      height: 33px;
+      line-height: 26px;
+      /* Center number vertically */
+    }
+
+    .cbt-step::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      width: 100%;
+      height: 2px;
+      background-color: #ffffff;
+      z-index: -1;
+      transform: translateY(-50%);
+    }
+
+    .cbt-step:last-child::after {
+      display: none;
+    }
+
+    .cbt-progressbar {
+
+      padding-right: 0;
+      padding-left: 0;
+    }
+
+    #svg-display img {
+      width: 100%;
+      max-width: 666px;
+      height: 100%;
+      border-radius: 50%;
+    }
+
+    #buttons-container .btn {
+      font-size: 20px;
+      padding: 15px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+
+    circle {
+      opacity: 1;
+      /* Circles are visible by default */
+    }
+
+    .pl-5 {
+      padding-left: 3rem !important;
+    }
+
+    @media only screen and (max-width: 700px) {
+
+      /* Add your styles for screens smaller than 700px here */
+      .pile-image {
+        width: 300px;
+      }
+    }
+
+    #svg-display {
+      min-height: 666px;
+    }
+
+    @media only screen and (max-width: 600px) {
+
+      /* Styles for mobile devices */
+      #svg-display {
+        min-height: 366px;
+      }
+    }
+
+    .image {
+      /* Adjust image height */
+      opacity: 1;
+      /* Image is visible */
+      -webkit-mask-image: linear-gradient(135deg, black 0%, black 50%, transparent 50%, transparent 100%);
+      mask-image: linear-gradient(135deg, black 0%, black 50%, transparent 50%, transparent 100%);
+      mask-size: 300% 300%;
+      /* Ensures full coverage of the image */
+      -webkit-mask-size: 300% 300%;
+    }
+
+    @keyframes revealDiagonal {
+      0% {
+        -webkit-mask-position: 100% 100%;
+        mask-position: 100% 100%;
+      }
+
+      100% {
+        -webkit-mask-position: 0% 0%;
+        mask-position: 0% 0%;
+      }
+    }
+
+    .animate {
+      animation: revealDiagonal 1.5s forwards ease-in-out;
+      /* Shortened duration */
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container m-0 pl-5" style="max-width: 100vw;">
+    <div class="row w-100 align-items-center pt-4">
+      <div class="col-12 col-md-2">
+        <div class="svgContainer" style="
+        text-align: center;
+    ">
+          <img src="logo.png" alt="" height="100px">
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-12 col-md-6">
+        <div class="svgContainer">
+          <img class="pile-image" src="logo2.png" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-4" id="progress-bar">
+    <div class="row" style="padding-left: 5vw;padding-right: 5vw;">
+      <div class="cbt-progressbar">
+        <div class="cbt-progressbar-line"></div>
+        <div class="cbt-step js-cbtStep" data-step="1"></div>
+        <div class="cbt-step js-cbtStep" data-step="2"></div>
+        <div class="cbt-step js-cbtStep" data-step="3"></div>
+        <div class="cbt-step js-cbtStep" data-step="4"></div>
+        <div class="cbt-step js-cbtStep" data-step="5"></div>
+        <div class="cbt-step js-cbtStep" data-step="6"></div>
+        <div class="cbt-step js-cbtStep" data-step="7"></div>
+        <div class="cbt-step js-cbtStep" data-step="8"></div>
+        <div class="cbt-step js-cbtStep" data-step="9"></div>
+        <div class="cbt-step js-cbtStep" data-step="10"></div>
+
+      </div>
+    </div>
+  </div>
+  <div class="container mt-2">
+
+    <!-- Game Container -->
+    <div id="game-container" style="display: none;">
+      <div class="row" style="align-items: center;justify-content: center;">
+
+
+        <!-- Column 1: SVG Display -->
+        <div class="col-md-6  ">
+          <div id="svg-display" class="text-center" style="    flex: 40%;
+          flex-grow: 0;
+          max-width: 666px;
+          height: 100%;">
+            <img id="question-image" class="image animate question-image" src="" alt="Question Image">
+
+            <!-- SVG will be loaded here dynamically -->
+          </div>
+        </div>
+        <!-- <div class="col-md-1"></div> -->
+        <!-- Column 2: Number Buttons -->
+        <div class="col-md-4">
+          <div class="text-center">
+            <div id="buttons-container" style="display: flex;
+                                flex-wrap: wrap;
+                                align-items: center;
+                                max-width: 360px;">
+
+
+              <button class=" answer-button" data-answer="butterfly" style="flex: calc(33% - 20px);"><img
+                  style="height: 50px;" src="assets/kids_button_img/butterfly.png" alt="Butterfly"></button>
+
+
+              <button class=" answer-button" data-answer="dolphin" style="flex: calc(33% - 20px);"><img
+                  style="height: 50px;" src="assets/kids_button_img/dolphin.png" alt="Butterfly"></button>
+
+
+              <button class="answer-button" data-answer="cow" style="flex: calc(33% - 20px);"><img style="height: 50px;"
+                  src="assets/kids_button_img/cow.png" alt="giraffe"></button>
+
+
+
+
+              <button class="answer-button" data-answer="giraffe" style="flex: calc(33% - 20px);"><img
+                  style="height: 50px;" src="assets/kids_button_img/giraffe.png" alt="duck"></button>
+
+
+              <button class="answer-button" data-answer="duck" style="flex: calc(33% - 20px);"><img
+                  style="height: 50px;" src="assets/kids_button_img/duck.png" alt="Butterfly"></button>
+
+
+              <button class="answer-button" data-answer="snail" style="flex: calc(33% - 20px);"><img
+                  style="height: 50px;" src="assets/kids_button_img/snail.png" alt="Butterfly"></button>
+
+
+
+
+              <button class="answer-button" data-answer="elephant" style="flex: calc(33% - 20px);"><img
+                  style="height: 50px;" src="assets/kids_button_img/elephant.png" alt="Butterfly"></button>
+
+
+              <button class="answer-button" data-answer="fish" style="flex: calc(33% - 20px);"><img
+                  style="height: 50px;" src="assets/kids_button_img/fish.png" alt="Butterfly"></button>
+
+
+              <button class="answer-button" data-answer="kangaroo" style="flex: calc(33% - 20px);"><img
+                  style="height: 50px;" src="assets/kids_button_img/kangaroo.png" alt="Butterfly"></button>
+
+
+
+              <!-- New Buttons -->
+
+
+              <button class="answer-button" data-answer="rabbit" style="margin-left: auto;padding: 1px 35px;"><img
+                  style="height: 50px;" src="assets/kids_button_img/rabbit.png" alt="Butterfly"></button>
+
+
+              <button class="answer-button" data-answer="Nothing"
+                style="margin-right: auto;padding: 14px 25px;">Nothing</button>
+
+              <div style="flex: 100%;height: 1px;">&nbsp;</div>
+              <button id="restart-button" style="
+                  display: inline-block;
+                  color: #fff;
+                  font-size: 12px;
+                  border-bottom: 1px solid #fff;
+                  margin: 0 auto;
+                  margin-bottom: 20px;
+                  text-decoration: none;
+                  background: transparent;
+                  border-top-width: 0px;
+                  border-left-width: 0px;
+                  border-right-width: 0px;
+                  ">Restart test</button>
+
+
+            </div>
+
+            <!-- Feedback message -->
+            <div id="feedback" style="display:none;" class="mt-4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result Container -->
+    <div id="result-container" class="text-center mt-4" style="display: none;">
+      <h3>Result</h3>
+      <h5 id="result-summary"></h5>
+      <button class="btn btn-primary my-4" id="restart-buttons">Restart Test</button>
+
+      <table class="table table-bordered table-dark mb-4" id="result-table" style="width: 50%;margin: auto;">
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Your Answer</th>
+            <th>Correct Answer</th>
+          </tr>
+        </thead>
+        <tbody id="result-body">
+          <!-- Results will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Progress Bar Steps
+    const steps = document.querySelectorAll('.js-cbtStep');
+
+    function setActiveStep(stepIndex) {
+      steps.forEach((step, index) => {
+        if (index < stepIndex) {
+          step.classList.add('cbt-complete');
+          step.classList.remove('cbt-active');
+          step.textContent = step.getAttribute('data-step');
+        } else if (index === stepIndex) {
+          step.classList.add('cbt-active');
+          step.classList.remove('cbt-complete');
+          step.textContent = step.getAttribute('data-step');
+        } else {
+          step.classList.remove('cbt-active');
+          step.classList.remove('cbt-complete');
+          step.textContent = "";
+        }
+      });
+    }
+
+    // Images and Correct Answers
+    const images = [
+      "assets/kids_image/fish_01.jpg",
+      "assets/kids_image/duck_02.jpg",
+      "assets/kids_image/dolphin_03.jpg",
+      "assets/kids_image/rabit_04.jpg",
+      "assets/kids_image/giraffe_05.jpg",
+      "assets/kids_image/elephant_06.jpg",
+      "assets/kids_image/butterfly_07.jpg",
+      "assets/kids_image/snail_08.jpg",
+      "assets/kids_image/cow_09.jpg",
+      "assets/kids_image/kangro_10.jpg"
+    ];
+
+    const correctAnswers = [
+      'fish',
+      'duck',
+      'dolphin',
+      'rabbit',
+      'giraffe',
+      'elephant',
+      'butterfly',
+      'snail',
+      'cow',
+      'kangaroo'
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = [];
+    let correctCount = 0;
+
+    // Start the game automatically when DOM is ready
+    window.onload = function () {
+      startTest();
+      setAnswerListeners();
+    };
+
+    // Start Test Function
+    function startTest() {
+      currentQuestion = 0;
+      userAnswers = [];
+      correctCount = 0;
+      document.getElementById('game-container').style.display = 'block';
+      document.getElementById('result-container').style.display = 'none';
+      updateQuestion();
+      setActiveStep(currentQuestion);
+    }
+
+    // Update Question Function
+    // function updateQuestion() {
+    //     document.getElementById('question-image').src = images[currentQuestion];
+    //     setActiveStep(currentQuestion);
+    // }
+    function updateQuestion() {
+      const imgElement = document.getElementById('question-image');
+
+      // Remove the animate class to reset the animation
+      imgElement.classList.remove('animate');
+
+      // Preload the image
+      const newImageSrc = images[currentQuestion];
+      const tempImg = new Image();
+      tempImg.src = newImageSrc;
+
+      // Once the image is loaded, apply it and trigger the animation
+      tempImg.onload = function () {
+        // Set the new image source
+        imgElement.src = newImageSrc;
+
+        // Force reflow to restart the animation
+        void imgElement.offsetWidth;
+
+        // Add the animate class to trigger the animation
+        imgElement.classList.add('animate');
+
+        setActiveStep(currentQuestion);
+      };
+
+      // Optional: You can also handle any error in image loading
+      tempImg.onerror = function () {
+        console.error('Failed to load image:', newImageSrc);
+      };
+    }
+
+
+    // Set Event Listeners for buttons
+    function setAnswerListeners() {
+      const answerButtons = document.querySelectorAll('.answer-button');
+      answerButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          const answer = this.getAttribute('data-answer');
+          submitAnswer(answer);
+        });
+      });
+    }
+
+    // Submit Answer Function
+    function submitAnswer(answer) {
+      userAnswers.push(answer);
+      currentQuestion++;
+
+      if (currentQuestion < images.length) {
+        updateQuestion();
+      } else {
+        displayResults();
+      }
+    }
+
+    // Display Results Function
+    function displayResults() {
+      const resultBody = document.getElementById('result-body');
+      resultBody.innerHTML = '';
+      correctCount = 0;
+      document.getElementById('progress-bar').style.display = 'none';
+
+      userAnswers.forEach((answer, index) => {
+        const row = document.createElement('tr');
+
+        const questionCell = document.createElement('td');
+        questionCell.textContent = index + 1;
+
+        const userAnswerCell = document.createElement('td');
+        if (answer === "Nothing") {
+          // If the user selected "Nothing", display an empty cell
+          userAnswerCell.textContent = "Nothing";
+        } else {
+          const userAnswerImg = document.createElement('img');
+          userAnswerImg.src = `assets/kids_button_img/${answer}.png`; // Assuming image filenames follow this pattern
+          userAnswerImg.style.height = '50px';
+          userAnswerCell.appendChild(userAnswerImg);
+        }
+
+        const correctAnswerCell = document.createElement('td');
+        const correctAnswerImg = document.createElement('img');
+        correctAnswerImg.src = `assets/kids_button_img/${correctAnswers[index]}.png`; // Assuming correct answer image filenames
+        correctAnswerImg.style.height = '50px';
+        correctAnswerCell.appendChild(correctAnswerImg);
+
+        if (answer === correctAnswers[index]) {
+          correctCount++;
+        }
+
+        row.appendChild(questionCell);
+        row.appendChild(userAnswerCell);
+        row.appendChild(correctAnswerCell);
+
+        resultBody.appendChild(row);
+      });
+
+      document.getElementById('result-summary').textContent = `You answered ${correctCount} out of ${images.length} questions correctly`;
+
+      document.getElementById('game-container').style.display = 'none';
+      document.getElementById('result-container').style.display = 'block';
+    }
+
+
+    // Restart Test Function
+    document.getElementById('restart-button').addEventListener('click', function () {
+      currentQuestion = 0;
+      userAnswers = [];
+      correctCount = 0;
+      document.getElementById('progress-bar').style.display = 'block';
+      startTest(); // Restart the test
+    });
+    // Restart Test Function
+    document.getElementById('restart-buttons').addEventListener('click', function () {
+      currentQuestion = 0;
+      userAnswers = [];
+      correctCount = 0;
+      document.getElementById('progress-bar').style.display = 'block';
+      startTest(); // Restart the test
+    });
+
+  </script>
+
+
+
+  <!-- Bootstrap 5 JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

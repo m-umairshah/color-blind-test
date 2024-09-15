@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Color Blind Test</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: black;
+      color: white;
+    }
+
+    /* Basic button styles */
+    .answer-button {
+      background: #333;
+    color: #fff;
+    border-radius: 6px;
+    font-weight: 700;
+    white-space: nowrap;
+    padding: 14px 24px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    box-shadow: 0 1px #666, 0 5px #444, 0 6px 6px #0009;
+    cursor: pointer;
+    }
+
+    .answer-buttons {
+      background-color: #f39c12 !important;
+    }
+
+    .answer-buttonss {
+      background-color: #e74c3c !important;
+    }
+
+    .answer-button:active {
+      color: #fff;
+    text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff;
+    box-shadow: 0 1px #666, 0 2px #444, 0 2px 2px #000000e6;
+    -webkit-transform: translateY(3px);
+    transform: translateY(3px);
+    -webkit-animation: none;
+    animation: none;
+
+    }
+
+    .answer-buttons:hover {
+      background-color: #da8a09 !important;
+    }
+
+    .answer-buttonss:hover {
+      background-color: #cd3626 !important;
+    }
+
+    .answer-button:hover {
+      -webkit-animation: pulsate 1.2s linear infinite;
+    animation: pulsate 1.2s linear infinite;
+    }
+
+    /* Add specific styling for disabled buttons if you need */
+    .answer-button:disabled {
+      background-color: grey;
+      cursor: not-allowed;
+    }
+
+    /* Feedback Message styling */
+    #feedback {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #ff6347;
+    }
+
+    .cbt-progressbar {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 60px;
+    }
+
+    .cbt-progressbar-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #ddd;
+      transform: translateY(-50%);
+      z-index: 0;
+    }
+
+    .cbt-step {
+      position: relative;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #ddd;
+      z-index: 1;
+      text-align: center;
+      line-height: 30px;
+      font-size: 14px;
+      color: transparent;
+      transition: all 0.3s ease;
+      /* Animation */
+    }
+
+    .cbt-complete {
+          background-color: #8BC34A !important;
+
+    }
+
+    .cbt-active {
+      background-color: white;
+      color: green;
+      font-size: 12px;
+      border: 3px solid green;
+      width: 33px;
+      height: 33px;
+      line-height: 26px;
+      /* Center number vertically */
+    }
+
+    .cbt-step::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      width: 100%;
+      height: 2px;
+      background-color: #ffffff;
+      z-index: -1;
+      transform: translateY(-50%);
+    }
+
+    .cbt-step:last-child::after {
+      display: none;
+    }
+
+    .cbt-progressbar {
+
+      padding-right: 0;
+      padding-left: 0;
+    }
+
+    #svg-display img {
+      width: 100%;
+      max-width: 450px;
+      height: auto;
+    }
+
+    #buttons-container .btn {
+      font-size: 20px;
+      padding: 15px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+
+    circle {
+      opacity: 1;
+      /* Circles are visible by default */
+    }
+    .pl-5 { 
+    padding-left: 3rem !important;
+}
+
+@media only screen and (max-width: 700px) {
+  /* Add your styles for screens smaller than 700px here */
+  .pile-image{
+  width: 300px;
+}
+}
+#svg-display{
+min-height:666px;
+}
+@media only screen and (max-width: 600px) {
+  /* Styles for mobile devices */
+  #svg-display{
+min-height:366px;
+}
+}
+
+
+  </style>
+</head>
+
+<body>
+
+  <div class="container m-0 pl-5" style="max-width: 100vw;">
+    <div class="row w-100 align-items-center pt-4">
+      <div class="col-12 col-md-2">
+        <div class="svgContainer" style="
+        text-align: center;
+    ">
+          <img src="logo.png" alt="" height="100px">
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-12 col-md-6">
+        <div class="svgContainer">
+          <img class="pile-image" src="logo2.png" alt="" >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-4" id="progress-bar">
+    <div class="row" style="padding-left: 5vw;padding-right: 5vw;">
+      <div class="cbt-progressbar">
+        <div class="cbt-progressbar-line"></div>
+        <div class="cbt-step js-cbtStep" data-step="1"></div>
+        <div class="cbt-step js-cbtStep" data-step="2"></div>
+        <div class="cbt-step js-cbtStep" data-step="3"></div>
+        <div class="cbt-step js-cbtStep" data-step="4"></div>
+        <div class="cbt-step js-cbtStep" data-step="5"></div>
+        <div class="cbt-step js-cbtStep" data-step="6"></div>
+        <div class="cbt-step js-cbtStep" data-step="7"></div>
+        <div class="cbt-step js-cbtStep" data-step="8"></div>
+        <div class="cbt-step js-cbtStep" data-step="9"></div>
+        <div class="cbt-step js-cbtStep" data-step="10"></div>
+        <div class="cbt-step js-cbtStep" data-step="11"></div>
+        <div class="cbt-step js-cbtStep" data-step="12"></div>
+        <div class="cbt-step js-cbtStep" data-step="13"></div>
+        <div class="cbt-step js-cbtStep" data-step="14"></div>
+        <div class="cbt-step js-cbtStep" data-step="15"></div>
+        <div class="cbt-step js-cbtStep" data-step="16"></div>
+        <div class="cbt-step js-cbtStep" data-step="17"></div>
+        <div class="cbt-step js-cbtStep" data-step="18"></div>
+        <div class="cbt-step js-cbtStep" data-step="19"></div>
+        <div class="cbt-step js-cbtStep" data-step="20"></div>
+        <div class="cbt-step js-cbtStep" data-step="21"></div>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-2">
+    <!-- Start Test Button -->
+    <div id="start-test-button" class="text-center">
+      <!-- <button class="btn btn-success">Restart Test</button> -->
+      <button class="btn btn-success mt-5" id="restart-button">Restart Test</button>
+
+    </div>
+
+    <!-- Game Container -->
+    <div id="game-container" style="display: none;">
+      <div class="row" style="align-items: center;justify-content: center;">
+
+
+        <!-- Column 1: SVG Display -->
+        <div class="col-md-6  ">
+          <div id="svg-display" class="text-center" style="    flex: 40%;
+          flex-grow: 0;
+          max-width: 666px;
+          height: 100%;">
+            <!-- SVG will be loaded here dynamically -->
+          </div>
+        </div>
+        <!-- <div class="col-md-1"></div> -->
+        <!-- Column 2: Number Buttons -->
+        <div class="col-md-4">
+          <div class="text-center">
+            <div id="buttons-container" style="display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            max-width: 360px;">
+              
+                
+                  <button class=" answer-button" data-answer="1" style="flex: calc(33% - 20px);">1</button>
+                
+                
+                  <button class=" answer-button" data-answer="2" style="flex: calc(33% - 20px);">2</button>
+                
+                
+                  <button class="answer-button" data-answer="3" style="flex: calc(33% - 20px);">3</button>
+                
+              
+              
+                
+                  <button class="answer-button" data-answer="4" style="flex: calc(33% - 20px);">4</button>
+                
+                
+                  <button class="answer-button" data-answer="5" style="flex: calc(33% - 20px);">5</button>
+                
+                
+                  <button class="answer-button" data-answer="6" style="flex: calc(33% - 20px);">6</button>
+                
+              
+              
+                
+                  <button class="answer-button" data-answer="7" style="flex: calc(33% - 20px);">7</button>
+                
+                
+                  <button class="answer-button" data-answer="8" style="flex: calc(33% - 20px);">8</button>
+                
+                
+                  <button class="answer-button" data-answer="9" style="flex: calc(33% - 20px);">9</button>
+                
+              
+
+              <!-- New Buttons -->
+              
+                
+                  <button class="answer-button" data-answer="Not Sure"
+                    style="margin-left: auto">Not Sure</button>
+                
+                
+                  <button class="answer-button" data-answer="Nothing"
+                    style="margin-right: auto">Nothing</button>
+                
+                    <div style="flex: 100%;height: 1px;">&nbsp;</div>
+                  <button  id="restart-button" onclick="restartTest()"
+                  style="
+                  display: inline-block;
+                  color: #fff;
+                  font-size: 12px;
+                  border-bottom: 1px solid #fff;
+                  margin: 0 auto;
+                  margin-bottom: 20px;
+                  text-decoration: none;
+                  background: transparent;
+                  border-top-width: 0px;
+                  border-left-width: 0px;
+                  border-right-width: 0px;
+                  ">Restart test</button>
+                
+              
+            </div>
+
+            <!-- Feedback message -->
+            <div id="feedback" style="display:none;" class="mt-4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result Container -->
+    <div id="result-container" class="text-center mt-4" style="display: none;">
+      <!-- Result will be displayed here dynamically -->
+    </div>
+  </div>
+
+  <script>
+    const steps = document.querySelectorAll('.js-cbtStep');
+
+    function setActiveStep(stepIndex) {
+      steps.forEach((step, index) => {
+        if (index < stepIndex) {
+          step.classList.add('cbt-complete');
+          step.classList.remove('cbt-active');
+          step.textContent = step.getAttribute('data-step'); // Display step number for previous steps
+        } else if (index === stepIndex) {
+          step.classList.add('cbt-active');
+          step.classList.remove('cbt-complete');
+          step.textContent = step.getAttribute('data-step'); // Display step number for the active step
+        } else {
+          step.classList.remove('cbt-active');
+          step.classList.remove('cbt-complete');
+          step.textContent = ""; // Clear the number for future/inactive steps
+        }
+      });
+    }
+
+
+    // Example: Set step 2 as active
+
+
+
+    // Access all div elements with class "svgContainer"
+    var svgContainers = document.querySelectorAll(".svgContainer");
+
+    // Loop through each container and apply the fill change to paths
+    svgContainers.forEach(function (container) {
+      // Find all path elements inside the current SVG
+      var paths = container.querySelectorAll("svg path");
+
+      // Apply fill only to those paths without a fill attribute
+      paths.forEach(function (path) {
+        if (!path.hasAttribute('fill')) {
+          path.setAttribute('fill', 'white');
+        }
+      });
+    });
+
+
+
+    const svgImages = [
+      { file: 'assets/svg/1.svg', answer: 1 },
+      { file: 'assets/svg/1.1.svg', answer: 1 },
+      { file: 'assets/svg/2.svg', answer: 2 },
+      { file: 'assets/svg/2.1.svg', answer: 2 },
+      { file: 'assets/svg/3.svg', answer: 3 },
+      { file: 'assets/svg/3.1.svg', answer: 3 },
+      { file: 'assets/svg/4.svg', answer: 4 },
+      { file: 'assets/svg/4.1.svg', answer: 4 },
+      { file: 'assets/svg/5.svg', answer: 5 },
+      { file: 'assets/svg/5.1.svg', answer: 5 },
+      { file: 'assets/svg/6.svg', answer: 6 },
+      { file: 'assets/svg/6.1.svg', answer: 6 },
+      { file: 'assets/svg/7.svg', answer: 7 },
+      { file: 'assets/svg/7.1.svg', answer: 7 },
+      { file: 'assets/svg/8.svg', answer: 8 },
+      { file: 'assets/svg/8.1.svg', answer: 8 },
+      { file: 'assets/svg/9.svg', answer: 9 },
+      { file: 'assets/svg/9.1.svg', answer: 9 }
+    ];
+
+    let currentSVG = null;
+    let previousAnswer = null; // Initialize previousAnswer to null
+    let questionCount = 0;
+    let score = 0;
+    let notSureCount = 0;
+    const maxQuestions = 21;
+
+    // Function to randomly select an SVG ensuring it has a different answer from the previous one
+    function getRandomSVG() {
+      let randomSVG;
+      do {
+        const randomIndex = Math.floor(Math.random() * svgImages.length);
+        randomSVG = svgImages[randomIndex];
+      } while (randomSVG.answer === previousAnswer && questionCount > 0); // Ensure a different answer after the first question
+      previousAnswer = randomSVG.answer; // Update previous answer after a new one is selected
+      return randomSVG;
+    }
+    // Function to load and display the SVG with a fade-in circle animation
+    // let currentSVG = null; // To keep track of the current SVG
+    let isFirstLoad = true; // To handle the first load without fading out the previous SVG
+
+    // Function to load and display the SVG with fade-in/out circle animation
+    function loadSVG() {
+      if (questionCount < maxQuestions) {
+        const svg = getRandomSVG();
+
+        if (isFirstLoad) {
+          // On the first load, no need to fade out the previous SVG
+          isFirstLoad = false;
+          fetchAndDisplaySVG(svg);
+        } else {
+          // Fade out current SVG's circles, then load new SVG
+          fadeOutCircles().then(() => {
+            fetchAndDisplaySVG(svg);
+          });
+        }
+      } else {
+        displayResult();
+      }
+    }
+
+    // Function to fetch and display the new SVG inline and apply fade-in animation
+    function fetchAndDisplaySVG(svg) {
+      currentSVG = svg;
+
+      // Fetch the SVG file and embed it inline as raw SVG code
+      fetch(svg.file)
+        .then(response => response.text())
+        .then(svgContent => {
+          // Directly insert the raw SVG content into the DOM
+          document.getElementById('svg-display').innerHTML = svgContent;
+
+          // After embedding the SVG, fade in its circles
+          fadeInCircles();
+
+          setActiveStep(questionCount); // Update the progress bar
+        })
+        .catch(error => console.error('Error loading SVG:', error));
+    }
+
+    // Function to fade out all circles in the current SVG
+    function fadeOutCircles() {
+      return new Promise((resolve) => {
+        let circles = document.querySelectorAll("#svg-display circle");
+        if (circles.length === 0) {
+          resolve(); // No circles to animate, proceed with loading next SVG
+          return;
+        }
+
+        // Apply fade-out animation to each circle
+        circles.forEach((circle, index) => {
+          let delay = (index / circles.length) * 0.5; // Spread animation over 0.5 seconds
+          circle.style.animation = `fadeOut 0.5s forwards ${delay}s`;
+        });
+
+        // Wait for the animation to finish before resolving the promise
+        setTimeout(() => {
+          resolve();
+        }, 500); // Match fadeOut animation duration
+      });
+    }
+
+    // Function to fade in circles in the new SVG
+    function fadeInCircles() {
+      let circles = document.querySelectorAll("#svg-display circle");
+
+      // Initially hide circles
+      circles.forEach(circle => {
+        circle.style.opacity = 0;
+      });
+
+      // Apply fade-in animation to each circle
+      circles.forEach((circle, index) => {
+        let delay = (index / circles.length) * 0.5; // Spread animation over 0.5 seconds
+        circle.style.animation = `fadeIn 0.5s forwards ${delay}s`;
+      });
+    }
+
+    // Function to handle answer button click
+    function handleAnswerClick(event) {
+      const userAnswer = event.target.getAttribute('data-answer');
+
+      if (userAnswer === 'Not Sure') {
+        notSureCount++;
+        if (notSureCount <= 2) {
+          score++; // Count as true answer up to 2 times
+          document.getElementById('feedback').innerText = 'Not Sure, but counted correct!';
+        } else {
+          document.getElementById('feedback').innerText = 'Too many "Not Sure" presses, wrong answer!';
+        }
+      } else if (userAnswer === 'Nothing') {
+        document.getElementById('feedback').innerText = 'Nothing selected, wrong answer!';
+      } else if (parseInt(userAnswer) === currentSVG.answer) {
+        score++;
+        document.getElementById('feedback').innerText = 'Correct!';
+      } else {
+        document.getElementById('feedback').innerText = 'Wrong answer. Try again!';
+      }
+
+      questionCount++;
+
+      setTimeout(() => {
+        document.getElementById('feedback').innerText = '';
+        loadSVG();
+      }, 1000);
+    }
+
+    // Function to display the final result
+    function displayResult() {
+      document.getElementById('progress-bar').style.display = 'none';
+      document.getElementById('svg-display').innerHTML = '';
+      document.getElementById('buttons-container').style.display = 'none';
+      document.getElementById('result-container').innerHTML = `
+    <h2>COLOR BLIND TEST RESULT!</h2>
+    <p>You answered ${score} out of ${maxQuestions} questions correctly.</p>
+  `;
+      document.getElementById('start-test-button').style.display = 'block';
+
+      document.getElementById('result-container').style.display = 'block';
+      document.getElementById('game-container').style.display = 'none';
+    }
+
+
+    // Function to restart the game
+    function restartTest() {
+      questionCount = 0;
+      score = 0;
+      notSureCount = 0;
+      document.getElementById('buttons-container').style.display = 'flex';
+      document.getElementById('result-container').style.display = 'none';
+      document.getElementById('game-container').style.display = 'block'; // Show the game container again
+      loadSVG();
+    }
+    document.getElementById('progress-bar').style.display = 'none';
+    document.getElementById('start-test-button').style.display = 'none';
+    document.getElementById('progress-bar').style.display = 'block';
+    document.getElementById('game-container').style.display = 'block';
+    loadSVG();
+    // Function to start the game
+    function startTest() {
+      document.getElementById('start-test-button').style.display = 'none';
+      document.getElementById('progress-bar').style.display = 'block';
+      document.getElementById('game-container').style.display = 'block';
+      loadSVG();
+    }
+
+    // Add event listeners to buttons
+    document.querySelectorAll('.answer-button').forEach(button => {
+      button.addEventListener('click', handleAnswerClick);
+    });
+
+    // Add event listener to restart button
+    document.getElementById('restart-button').addEventListener('click', restartTest);
+
+    // Add event listener to start test button
+    document.getElementById('start-test-button').addEventListener('click', startTest);
+
+  </script>
+
+
+
+  <!-- Bootstrap 5 JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
