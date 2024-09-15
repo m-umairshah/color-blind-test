@@ -15,7 +15,7 @@ This repository contains a web-based color blind test application designed for b
 
 ## Demo
 
-You can see the project in action by visiting [Demo URL] (replace with the demo link if available).
+You can see the project in action by visiting [Demo URL](https://m-umairshah.github.io/color-blind-test/).
 
 ## File Structure
 
